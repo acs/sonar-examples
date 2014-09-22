@@ -31,7 +31,7 @@
         <configuration>
           <archive>
             <manifest>
-              <mainClass>sample.Sample</mainClass>
+              <mainClass>sample.Polarsys</mainClass>
             </manifest>
           </archive>
           <descriptorRefs>
