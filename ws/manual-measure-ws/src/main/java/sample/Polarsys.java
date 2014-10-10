@@ -22,8 +22,13 @@ public class Polarsys {
     Sonar sonar = new Sonar(new HttpClient4Connector(new Host(url, login, password)));
 
     String projectKey = "org.eclipse.cdt:cdt-parent";
+    // projectKey = "org.eclipse.emf.compare.features:org.eclipse.emf.compare.diagram.papyrus";
+    // projectKey = "org.eclipse.emf.compare:org.eclipse.emf.compare.diagram.papyrus.tests";
+    // projectKey = "org.eclipse.emf.compare:org.eclipse.emf.compare.diagram.ide.ui.papyrus";
+    projectKey = "org.eclipse.ease:ease";
+    // projectKey = "org.eclipse.ease:ease.modules:EASE.modules";
+	System.out.println(projectKey);
 
-    // ResourceQuery query = ResourceQuery.createForMetrics(projectKey, "complexity","open_issues", "coverage", "lines", "violations");
     ResourceQuery query = ResourceQuery.createForMetrics(projectKey,
     		"line_coverage","tests","test_success_density","ncloc",
     		"functions","complexity","comment_lines_density",
@@ -41,7 +46,8 @@ public class Polarsys {
     }
 
     try {
-		FileWriter file = new FileWriter("eclipse_sonar.json");
+		// FileWriter file = new FileWriter("eclipse_sonar.json");
+		FileWriter file = new FileWriter(projectKey + ".json");
 		file.write(obj.toJSONString());
 		file.flush();
 		file.close();
