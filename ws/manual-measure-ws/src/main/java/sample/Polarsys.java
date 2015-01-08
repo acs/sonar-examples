@@ -80,20 +80,33 @@ public class Polarsys {
 		ResourceQuery query = ResourceQuery.createForMetrics(projectKey,
 				"line_coverage", "tests", "test_success_density", "ncloc",
 				"functions", "complexity", "comment_lines_density",
-				"uncovered_lines", "duplicated_lines", "weighted_violations",
-				"public_api", "dit");
+				"uncovered_lines", "duplicated_lines", "duplicated_lines_density", "weighted_violations",
+				"public_api", "dit","branch_coverage","test_success_density","function_complexity");
 		// query.setIncludeTrends(true);
 		Resource metrics = sonar.find(query);
 
 		JSONObject obj = new JSONObject();
 
 		// getVariation2 for "7 days"
+		// Metric tst_vol_idx = tests / (ncloc /1000)
+		Double tests = null;
+		Double ncloc = null;
 		List<Measure> allMeasures = metrics.getMeasures();
 		for (Measure measure : allMeasures) {
 			System.out.println(measure.getMetricKey() + ": "
 					+ measure.getValue());
 			obj.put(measure.getMetricKey(), measure.getValue());
+			if (measure.getMetricKey().equals("tests")) {
+				tests = measure.getValue();
+			}
+			if (measure.getMetricKey().equals("ncloc")) {
+				ncloc = measure.getValue();
+			}
 		}
+		// Metric tst_vol_idx = tests / (ncloc /1000)
+		obj.put("tst_vol_idx", tests / (ncloc /1000));
+		System.out.println("tst_vol_idx" + ": " + tests / (ncloc /1000));
+
 
 		try {
 			FileWriter file = new FileWriter(projectKey + ".json");
